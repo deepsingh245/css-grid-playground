@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Grid Playground | Interactive Demo</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+
+<body>
+
+  <!-- Dynamic Background -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="vignette"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Grid Playground</h1>
+      <p class="subtitle">Interactive CSS Grid Layout Explorer</p>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="playground-layout">
+      <!-- Grid Display Area -->
+      <div class="grid-display">
+        <div class="grid-container" id="gridContainer">
+          <div class="grid-item">1</div>
+          <div class="grid-item">2</div>
+          <div class="grid-item">3</div>
+          <div class="grid-item">4</div>
+          <div class="grid-item">5</div>
+          <div class="grid-item">6</div>
+          <div class="grid-item">7</div>
+          <div class="grid-item">8</div>
+          <div class="grid-item">9</div>
+        </div>
+      </div>
+
+      <!-- Control Panel -->
+      <div class="control-panel">
+        <h2>Controls</h2>
+
+        <!-- Grid Items Control -->
+        <div class="control-section">
+          <h3>Grid Items</h3>
+          <div class="input-group">
+            <label>Number of Items</label>
+            <div class="input-with-btn">
+              <input type="number" id="itemCount" min="1" max="20" value="9" class="input-field">
+              <button class="btn-small" id="updateItems">Update</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Template Columns -->
+        <div class="control-section">
+          <h3>Template Columns</h3>
+          <div class="btn-group">
+            <button class="btn active" data-layout="columns-3">
+              3 Equal Columns
+              <span class="btn-label">repeat(3, 1fr)</span>
+            </button>
+            <button class="btn" data-layout="columns-4">
+              4 Equal Columns
+              <span class="btn-label">repeat(4, 1fr)</span>
+            </button>
+            <button class="btn" data-layout="columns-auto">
+              Auto-Fit Responsive
+              <span class="btn-label">repeat(auto-fit, minmax(150px, 1fr))</span>
+            </button>
+            <button class="btn" data-layout="columns-varied">
+              Varied Widths
+              <span class="btn-label">1fr 2fr 1fr</span>
+            </button>
+          </div>
+          <div class="input-group">
+            <label>Custom Columns</label>
+            <input type="text" id="customColumns" placeholder="e.g., 100px 1fr 2fr" class="input-field">
+            <button class="btn-small" id="applyCustomColumns">Apply</button>
+          </div>
+        </div>
+
+        <!-- Template Rows -->
+        <div class="control-section">
+          <h3>Template Rows</h3>
+          <div class="btn-group">
+            <button class="btn" data-layout="rows-auto">
+              Auto Rows
+              <span class="btn-label">grid-auto-rows: auto</span>
+            </button>
+            <button class="btn" data-layout="rows-fixed">
+              Fixed Height
+              <span class="btn-label">grid-template-rows: repeat(3, 150px)</span>
+            </button>
+            <button class="btn" data-layout="rows-minmax">
+              Min-Max
+              <span class="btn-label">grid-auto-rows: minmax(100px, auto)</span>
+            </button>
+          </div>
+          <div class="input-group">
+            <label>Custom Rows</label>
+            <input type="text" id="customRows" placeholder="e.g., 100px auto 200px" class="input-field">
+            <button class="btn-small" id="applyCustomRows">Apply</button>
+          </div>
+        </div>
+
+        <!-- Gap -->
+        <div class="control-section">
+          <h3>Gap</h3>
+          <div class="btn-group">
+            <button class="btn" data-layout="gap-small">
+              Small Gap
+              <span class="btn-label">gap: 10px</span>
+            </button>
+            <button class="btn active" data-layout="gap-medium">
+              Medium Gap
+              <span class="btn-label">gap: 20px</span>
+            </button>
+            <button class="btn" data-layout="gap-large">
+              Large Gap
+              <span class="btn-label">gap: 40px</span>
+            </button>
+            <button class="btn" data-layout="gap-none">
+              No Gap
+              <span class="btn-label">gap: 0</span>
+            </button>
+          </div>
+          <div class="input-group">
+            <label>Custom Gap (px)</label>
+            <input type="range" id="gapRange" min="0" max="60" value="20" class="range-slider">
+            <span class="range-value" id="gapValue">20px</span>
+          </div>
+        </div>
+
+        <!-- Alignment -->
+        <div class="control-section">
+          <h3>Align Items</h3>
+          <div class="btn-group">
+            <button class="btn" data-layout="align-start">
+              Start
+              <span class="btn-label">align-items: start</span>
+            </button>
+            <button class="btn" data-layout="align-center">
+              Center
+              <span class="btn-label">align-items: center</span>
+            </button>
+            <button class="btn" data-layout="align-end">
+              End
+              <span class="btn-label">align-items: end</span>
+            </button>
+            <button class="btn" data-layout="align-stretch">
+              Stretch
+              <span class="btn-label">align-items: stretch</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Justify Content -->
+        <div class="control-section">
+          <h3>Justify Content</h3>
+          <div class="btn-group">
+            <button class="btn" data-layout="justify-start">
+              Start
+              <span class="btn-label">justify-content: start</span>
+            </button>
+            <button class="btn" data-layout="justify-center">
+              Center
+              <span class="btn-label">justify-content: center</span>
+            </button>
+            <button class="btn" data-layout="justify-end">
+              End
+              <span class="btn-label">justify-content: end</span>
+            </button>
+            <button class="btn" data-layout="justify-space-between">
+              Space Between
+              <span class="btn-label">justify-content: space-between</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid Auto Flow -->
+        <div class="control-section">
+          <h3>Auto Flow</h3>
+          <div class="btn-group">
+            <button class="btn active" data-layout="flow-row">
+              Row
+              <span class="btn-label">grid-auto-flow: row</span>
+            </button>
+            <button class="btn" data-layout="flow-column">
+              Column
+              <span class="btn-label">grid-auto-flow: column</span>
+            </button>
+            <button class="btn" data-layout="flow-dense">
+              Dense
+              <span class="btn-label">grid-auto-flow: dense</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Special Layouts -->
+        <div class="control-section">
+          <h3>Special Layouts</h3>
+          <div class="btn-group">
+            <button class="btn" data-layout="masonry">
+              Masonry Style
+              <span class="btn-label">varied heights + auto-fit</span>
+            </button>
+            <button class="btn" data-layout="holy-grail">
+              Holy Grail
+              <span class="btn-label">header + sidebar + main + footer</span>
+            </button>
+            <button class="btn" data-layout="dashboard">
+              Dashboard
+              <span class="btn-label">card-based layout</span>
+            </button>
+            <button class="btn" data-layout="reset">
+              Reset
+              <span class="btn-label">back to default</span>
+            </button>
+          </div>
+        </div>
+      </div>
+       <!-- Current CSS Code -->
+        <div class="current-code">
+          <h2>Current CSS Code</h2>
+          <div class="code-display" id="codeDisplay">
+            <div class="code-line"><span class="code-property">display:</span> <span class="code-value">grid</span>;</div>
+            <div class="code-line"><span class="code-property">grid-template-columns:</span> <span class="code-value">repeat(3,
+                1fr)</span>;</div>
+            <div class="code-line"><span class="code-property">gap:</span> <span class="code-value">20px</span>;</div>
+          </div>
+        </div>
+        </div>
+        </div>
+
+  <script type="module" src="/src/main.js"></script>
+
+</body>
+
+</html>
